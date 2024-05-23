@@ -1,9 +1,32 @@
-<!doctype html>
-<html>
-  <head>
-    <title>This is the title of the webpage!</title>
-  </head>
-  <body>
-    <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+</head>
+<body>
+    <h1>Search Page</h1>
+    <button id="searchButton">Search</button>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            // Faz uma requisição para acessar o banco de dados e executar a query
+            fetch('/search')
+            .then(response => response.json())
+            .then(data => {
+                // Exibe os resultados na página
+                let resultsDiv = document.getElementById("results");
+                resultsDiv.innerHTML = "<h2>Results:</h2>";
+                data.forEach(item => {
+                    resultsDiv.innerHTML += `<p>Crypto: ${item.Crypto}, Price: ${item.Price}, Date: ${item.USD}</p>`;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
 </html>
